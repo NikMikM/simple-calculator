@@ -190,22 +190,18 @@ main()
     size_t zeros;
     cin >> zeros;
 
-    Calculator<int> calc;
 
     if (zeros == 0)
     {
-        delete(calc);
         cout << "Now you're in tshe int mode, you can use +,-,*,/,%,^ " << endl;
-        Calculator<int> calc;
-        
+        Int_Calculator calc1(zeros);
+        RunCalculator(calc1);
     }
     else
     {
-        delete(calc);
         cout << "Now you're in the double mode, you can use +,-,*,/,^ " << endl;
-        Calculator<double> calc;
+        Double_Calculator calc2(zeros);
+        RunCalculator(calc2);
     }
-    RunCalculator(calc);
-
     return 0;
 }
