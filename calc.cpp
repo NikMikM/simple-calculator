@@ -14,6 +14,9 @@ class Calculator
 {
 public:
     Calculator(){};
+    Calculator(const size_t& zeros){
+        SetPrecision(zeros);
+    }
     double Calculate(stringstream &ss)
     {
         try
@@ -30,6 +33,7 @@ public:
         }
         DoOperation(op);
         size_t current_precision = ((KnowTens(result) + precision) > 11) ? 11 : KnowTens(result) + precision;
+        //cout<<current_precision << endl;
         cout.precision(current_precision);
         ss.clear();
         return result;
@@ -37,14 +41,7 @@ public:
 
     bool IsOperation(char &x)
     {
-        if ((x == '+') || (x == '-') || (x == '*') || (x == '/') || (x == '%') || (x == '^'))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return ((x == '+') || (x == '-') || (x == '*') || (x == '/') || (x == '%') || (x == '^'));
     }
     void ParseStream(stringstream &ss)
     {
@@ -152,26 +149,6 @@ protected:
     size_t precision;
 };
 
-class Int_Calculator : public Calculator<int>
-{
-public:
-    Int_Calculator(const size_t &precision)
-    {
-        SetPrecision(0);
-    };
-
-private:
-};
-
-class Double_Calculator : public Calculator<double>
-{
-public:
-    Double_Calculator(const size_t &precision)
-    {
-        SetPrecision(precision);
-    };
-};
-
 template <typename T>
 void RunCalculator(Calculator<T> &calc)
 {
@@ -180,27 +157,26 @@ void RunCalculator(Calculator<T> &calc)
     while (getline(cin, s))
     {
         stringstream ss{s};
-        cout << "Result is: " << calc.Calculate(ss) << endl;
+        cout << "Result is: " << fixed << calc.Calculate(ss) << endl;
     }
 }
+
 main()
 {
     cerr << "To delete result type c" << endl;
     cout << "Write number of digits after the point:" << endl;
     size_t zeros;
     cin >> zeros;
-
-
     if (zeros == 0)
     {
         cout << "Now you're in tshe int mode, you can use +,-,*,/,%,^ " << endl;
-        Int_Calculator calc1(zeros);
+        Calculator<int> calc1(zeros);
         RunCalculator(calc1);
     }
     else
     {
         cout << "Now you're in the double mode, you can use +,-,*,/,^ " << endl;
-        Double_Calculator calc2(zeros);
+        Calculator<double> calc2(zeros);
         RunCalculator(calc2);
     }
     return 0;
