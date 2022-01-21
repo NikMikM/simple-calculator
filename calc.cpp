@@ -33,7 +33,6 @@ public:
         }
         DoOperation(op);
         size_t current_precision = ((KnowTens(result) + precision) > 11) ? 11 : KnowTens(result) + precision;
-        //cout<<current_precision << endl;
         cout.precision(current_precision);
         ss.clear();
         return result;
